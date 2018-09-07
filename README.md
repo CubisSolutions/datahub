@@ -33,4 +33,12 @@ When correctly deployed, you should see information about the ports that are use
 
 ![voraports](https://github.com/CubisSolutions/datahub/raw/master/assets/ports.png?raw=true, "ports picture")
 
+In your favourite browser, start the "SAP DATA Hub System Management" webui using https://10.11.12.10:*vsystem-port*.
+You should be redirected to the screen below. Because the site is using a self-signed certificate, you will have to explicitely proceed to the page.
+![datahublogin](https://github.com/CubisSolutions/datahub/raw/master/assests/datahubloginscreen.png?raw=true, "datahubloginscreen picture")
+
+The "Tenant ID" is **default**
+The "Username" is **vora** *(or the user id provided during the data hub installation script in case it was changed)*
+The "Password" is **cubisvora** *(or the password provided with the installation script)*
+
 
