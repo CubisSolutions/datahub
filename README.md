@@ -29,4 +29,8 @@ Now that the Kubernets cluster is running, the SAP Data Hub and Vora deployment 
 /datahub/SAPVora-2.2.48-DistributedRuntime/install.sh --namespace=vora --docker-registry=10.11.12.10:5000 -a --vora-admin-username=vora --vora-admin-password=cubisvora --provision-persistent-volumes=yes --nfs-address=master --nfs-path=/mnt/voranfs --local-nfs-path=/mnt/share --cert-domain=master -dt=onpremise --vsolution-import-path=/datahub/bdh-assembly-vsystem --interactive-security-configuration=no -ss=vora-diagnostic
 ```
 
+When correctly deployed, you should see information about the ports that are used by vsystem and vora-tx-coordinator. Via the vsystem webui, you can startup the Vora Tools and SAP Data Hub Pipeline
+
+![voraports](https://github.com/CubisSolutions/datahub/raw/master/assets/ports.png?raw=true, "ports picture")
+
 
