@@ -10,5 +10,5 @@ vagrant plugin install vagrant-disksize
 vagrant plugin install vagrant-hostmanager
 ```
 
-After the initial setup you should be able to access the [Kubernetes Dashboard](http://http://10.11.12.10:8001/api/v1/namespaces/kube-system/services/http:kubernetes-dashboard:/proxy/)
+After the initial setup you should be able to access the [Kubernetes Dashboard](http://10.11.12.10:8001/api/v1/namespaces/kube-system/services/http:kubernetes-dashboard:/proxy/)
 
