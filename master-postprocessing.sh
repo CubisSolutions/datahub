@@ -17,7 +17,7 @@ cd $HOME
 
 sed -i 's/replicationFactor: 2/replicationFactor: 1/' /datahub/SAPVora-2.2.48-DistributedRuntime/deployment/helm/vora-cluster/values.yaml
 
-sudo su - hadoop -c 'ssh-keyscan localhost,0.0.0.0 > ~/.ssh/known_hosts'
+sudo su - hadoop -c 'ssh-keyscan localhost,0.0.0.0,master > ~/.ssh/known_hosts'
 sudo su - hadoop -c 'hdfs namenode -format'
 sudo su - hadoop -c '$HADOOP_HOME/sbin/start-dfs.sh'
 sudo su - hadoop -c '$HADOOP_HOME/sbin/start-yarn.sh'
