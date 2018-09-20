@@ -1,3 +1,10 @@
 /.vagrant/
 *.ZIP
 /ubuntu-xenial-16.04-cloudimg-console.log
+/nohup.out
+/xscomponents/
+/shared/id_rsa
+/shared/id_rsa.pub
+/shared/token.txt
+/IMDB_DPAGENT.SAR
+/SAPCAR.EXE

@@ -37,6 +37,12 @@ Vagrant.configure("2") do |config|
         subconfig.vm.hostname = "node#{i - 1}"
         subconfig.vm.network :private_network, ip: NODE_IP_NW + "#{i + 9}"
         subconfig.vm.provision :shell, :path => "provision.sh", :args => "'node'"
+	if i == NODE_COUNT
+	  subconfig.trigger.after :up do |trigger|
+	    trigger.info = "Staring node2 postprocessing ..."
+	    trigger.run_remote = {inline: "/vagrant/node2-postprocessing.sh" }
+	  end
+	end
       end
     end
   end
