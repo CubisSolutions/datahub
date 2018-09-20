@@ -9,7 +9,11 @@ EOF
 apt-get update
 
 apt-get install -y kubelet=1.7.16-00 kubeadm=1.7.16-00 kubectl=1.7.15-00 kubernetes-cni=0.5.1-00
-apt-get install -y docker.io rpcbind nfs-common nfs-kernel-server unzip python-pip
+apt-get install -y docker.io rpcbind nfs-common nfs-kernel-server unzip python-pip libaio1 
+
+add-apt-repository ppa:ubuntu-toolchain-r/test -y
+apt-get update
+apt-get install libstdc++6
 
 pip install pyyaml
 
@@ -50,6 +54,7 @@ then
   cp /vagrant/hdfs-site.xml /srv/hadoop/etc/hadoop/hdfs-site.xml
   cp /vagrant/yarn-site.xml /srv/hadoop/etc/hadoop/yarn-site.xml
   cp /vagrant/spark-env.sh /srv/spark/conf/spark-env.sh
+  cp /vagrant/spark-defaults.conf /srv/spark/conf/spark-defaults.conf
 
   chown hadoop:hadoop -R /srv/hadoop-2.9.1
   chown hadoop:hadoop -R /srv/spark-2.1.3-bin-hadoop2.7
@@ -104,10 +109,19 @@ then
   rm helm-v2.6.1-linux-amd64.tar
 
   kubectl create clusterrolebinding add-on-cluster-admin --clusterrole=cluster-admin --serviceaccount=kube-system:default
-#  kubectl proxy --address=10.11.12.10 --port=8001 --accept-hosts='^*$' &
+
+  # Create ssh key pair to get acess from nodes to master
+  ssh-keygen -f /vagrant/shared/id_rsa -q -N ""
+  cat /vagrant/shared/id_rsa.pub >> /home/vagrant/.ssh/authorized_keys
 else
   token=`cat /vagrant/shared/token.txt` 
   echo "Applying token: $token"
   kubeadm join --token $token 10.11.12.10:6443
+  cp /vagrant/shared/id_rsa* /home/vagrant/.ssh/
+  cp /vagrant/shared/id_rsa  /root/.ssh/
+  ssh-keyscan -H master >> /home/vagrant/.ssh/known_hosts
+  ssh-keyscan -H master >> /root/.ssh/known_hosts
+  chown vagrant:vagrant -R /home/vagrant/.ssh
+  chmod 600 -R /home/vagrant/.ssh/id_rsa
+  chmod 600 -R /root/.ssh/id_rsa
 fi
-
