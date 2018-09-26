@@ -26,8 +26,8 @@ then
   $voradir/install.sh --namespace=vora --docker-registry=10.11.12.10:5000 -a --vora-admin-username=vora --vora-admin-password=cubisvora --provision-persistent-volumes=yes --nfs-address=master --nfs-path=/mnt/voranfs --local-nfs-path=/mnt/share --cert-domain=master -dt=onpremise --vsolution-import-path=/datahub/bdh-assembly-vsystem --interactive-security-configuration=no -ss=vora-diagnostic
   # Get vora-tx-coordinator port
   port=$(kubectl get services -n vora vora-tx-coordinator | grep -o -P '(?<=10002:).*(?=/TCP)')
+  echo $port > /vagrant/shared/txcoordinatorport.txt
   echo "vora-tx-coordinator port is $port"
-  sudo sed -i -e "s/txport/$port/" /srv/spark/conf/spark-defaults.conf
 else
   echo "Kubernetes cluster up: Time out !"
 fi
