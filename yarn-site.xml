@@ -25,15 +25,15 @@
   </property>
   <property>
      <name>yarn.resourcemanager.resource-tracker.address</name>
-     <value>localhost:8025</value>
+     <value>hadoop:8025</value>
   </property>
   <property>
      <name>yarn.resourcemanager.scheduler.address</name>
-     <value>localhost:8030</value>
+     <value>hadoop:8030</value>
   </property>
   <property>
      <name>yarn.resourcemanager.address</name> 
-     <value>localhost:8050</value>
+     <value>hadoop:8050</value>
   </property>
   <property>
      <name>yarn.nodemanager.vmem-pmem-ratio</name>

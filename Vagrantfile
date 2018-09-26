@@ -2,7 +2,7 @@
 # vi: set ft=ruby :
 
 BOX_IMAGE = "ubuntu/xenial64"
-NODE_COUNT = 3 
+NODE_COUNT = 4 
 NODE_IP_NW = "10.11.12."
 NODE_MEM = "4096"
 
@@ -26,24 +26,37 @@ Vagrant.configure("2") do |config|
       config.vm.define "master" do |subconfig|
         subconfig.vm.hostname = "master"
         subconfig.vm.network :private_network, ip: NODE_IP_NW + "#{i + 9}"
-        subconfig.vm.provision :shell, :path => "provision.sh", :args => "'master'"
+	subconfig.vm.provision :shell, :path => "provision.sh", :args => "'master'"
         subconfig.trigger.after :up do |trigger|
           trigger.info = "Starting dashboard ..."
           trigger.run_remote = { inline: "/vagrant/master-postprocessing.sh" }
 	end
       end
     else
-      config.vm.define "node#{i - 1}" do |subconfig|
-        subconfig.vm.hostname = "node#{i - 1}"
-        subconfig.vm.network :private_network, ip: NODE_IP_NW + "#{i + 9}"
-        subconfig.vm.provision :shell, :path => "provision.sh", :args => "'node'"
-	if i == NODE_COUNT
-	  subconfig.trigger.after :up do |trigger|
-	    trigger.info = "Staring node2 postprocessing ..."
-	    trigger.run_remote = {inline: "/vagrant/node2-postprocessing.sh" }
-	  end
+      if i == 2
+        config.vm.define "hadoop" do |subconfig|
+	  subconfig.vm.hostname = "hadoop"
+          subconfig.vm.network :private_network, ip: NODE_IP_NW + "#{i + 9}"
+          subconfig.vm.provision :shell, :path => "provision.sh", :args => "'hadoop'"
+          subconfig.trigger.after :up do |trigger|
+            trigger.info = "Starting dashboard ..."
+            trigger.run_remote = { inline: "/vagrant/hadoop-postprocessing.sh" }
 	end
+	end
+      else
+        config.vm.define "node#{i - 2}" do |subconfig|
+          subconfig.vm.hostname = "node#{i - 2}"
+          subconfig.vm.network :private_network, ip: NODE_IP_NW + "#{i + 9}"
+          subconfig.vm.provision :shell, :path => "provision.sh", :args => "'node'"
+	  if i == NODE_COUNT
+	    subconfig.trigger.after :up do |trigger|
+	      trigger.info = "Staring node2 postprocessing ..."
+	      trigger.run_remote = {inline: "/vagrant/node2-postprocessing.sh" }
+	    end
+	  end
+        end
       end
     end
   end
+
 end

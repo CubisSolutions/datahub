@@ -65,9 +65,9 @@
 # - SPARK_NICENESS      The scheduling priority for daemons. (Default: 0)
 # - SPARK_NO_DAEMONIZE  Run the proposed command in the foreground. It will not output a PID file.
 
-export SPARK_MASTER_IP=localhost
+export SPARK_MASTER_IP=hadoop
 export SPARK_WORKER_CORES=1
 export SPARK_WORKER_MEMORY=800m
 export SPARK_WORKER_INSTANCES=1
 export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop
-export V2_AUTH_CONF_DIR=/home/hadoop
+export V2_AUTH_CONF_DIR=/home/vagrant
