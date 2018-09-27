@@ -20,7 +20,7 @@ cd $HOME
 
 sed -i 's/replicationFactor: 2/replicationFactor: 1/' /datahub/SAPVora-2.2.48-DistributedRuntime/deployment/helm/vora-cluster/values.yaml
 
-nohup kubectl proxy --address=10.11.12.10 --port=8001 --accept-hosts='^*$' &
+nohup kubectl proxy --address=0.0.0.0 --port=8001 --accept-hosts='^*$' &
 
 sleep 10
 

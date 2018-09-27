@@ -3,7 +3,7 @@
 # Source: http://kubernetes.io/docs/getting-started-guides/kubeadm/
 
 sudo mkdir /datahub
-sudo unzip -o /vagrant/DHSPARKINT.ZIP -d /datahub
+sudo unzip -n /vagrant/DHSPARKINT.ZIP -d /datahub
 sudo chmod 755 -R /datahub
 sudo chown vagrant:vagrant -R /datahub
 
