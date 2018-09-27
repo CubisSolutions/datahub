@@ -14,7 +14,7 @@ Vagrant.configure("2") do |config|
   config.disksize.size = "50GB"
 
   config.vm.provider "virtualbox" do |l|
-    l.cpus = 4
+    l.cpus = 2 
     l.memory = NODE_MEM 
   end
 
@@ -24,6 +24,10 @@ Vagrant.configure("2") do |config|
   (1..NODE_COUNT).each do |i|
     if i == 1
       config.vm.define "master" do |subconfig|
+        subconfig.vm.network "forwarded_port", guest: 8001, host: 8001
+        for j in 30000 .. 32767
+          subconfig.vm.network :forwarded_port, guest: j, host: j
+        end
         subconfig.vm.hostname = "master"
         subconfig.vm.network :private_network, ip: NODE_IP_NW + "#{i + 9}"
 	subconfig.vm.provision :shell, :path => "provision.sh", :args => "'master'"
@@ -37,6 +41,11 @@ Vagrant.configure("2") do |config|
         config.vm.define "hadoop" do |subconfig|
 	  subconfig.vm.hostname = "hadoop"
           subconfig.vm.network :private_network, ip: NODE_IP_NW + "#{i + 9}"
+          subconfig.vm.network "forwarded_port", guest: 50070, host: 50070
+          subconfig.vm.network "forwarded_port", guest: 9000, host: 9000 
+          subconfig.vm.network "forwarded_port", guest: 8088, host: 8088 
+          subconfig.vm.network "forwarded_port", guest: 8044, host: 8044 
+          subconfig.vm.network "forwarded_port", guest: 8042, host: 8042 
           subconfig.vm.provision :shell, :path => "provision.sh", :args => "'hadoop'"
           subconfig.trigger.after :up do |trigger|
             trigger.info = "Starting dashboard ..."
