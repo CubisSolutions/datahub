@@ -25,9 +25,9 @@ Vagrant.configure("2") do |config|
     if i == 1
       config.vm.define "master" do |subconfig|
         subconfig.vm.network "forwarded_port", guest: 8001, host: 8001
-        for j in 30000 .. 32767
-          subconfig.vm.network :forwarded_port, guest: j, host: j
-        end
+#        for j in 30000 .. 32767
+#          subconfig.vm.network :forwarded_port, guest: j, host: j
+#        end
         subconfig.vm.hostname = "master"
         subconfig.vm.network :private_network, ip: NODE_IP_NW + "#{i + 9}"
 	subconfig.vm.provision :shell, :path => "provision.sh", :args => "'master'"

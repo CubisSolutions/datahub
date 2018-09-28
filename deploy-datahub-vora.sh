@@ -23,7 +23,11 @@ then
   $voradir/install.sh --assign-nodes --namespace=vora --docker-registry=10.11.12.10:5000
   sleep 10
   echo "Vora: Deploy environment" 
-  $voradir/install.sh --namespace=vora --docker-registry=10.11.12.10:5000 -a --vora-admin-username=vora --vora-admin-password=cubisvora --provision-persistent-volumes=yes --nfs-address=master --nfs-path=/mnt/voranfs --local-nfs-path=/mnt/share --cert-domain=master -dt=onpremise --vsolution-import-path=/datahub/bdh-assembly-vsystem --interactive-security-configuration=no -ss=vora-diagnostic
+  cd /datahub/bdh-assembly-vsystem
+  ./prepare.sh
+  cd $HOME
+  $voradir/install.sh --namespace=vora --docker-registry=10.11.12.10:5000 -a --vora-admin-username=vora --vora-admin-password=cubisvora --provision-persistent-volumes=yes --nfs-address=master --nfs-path=/mnt/voranfs --local-nfs-path=/mnt/share --cert-domain=master -dt=onpremise --interactive-security-configuration=no -ss=vora-diagnostic
+  $voradir/install.sh --namespace=vora --docker-registry=10.11.12.10:5000 -a --vora-admin-username=vora --vora-admin-password=cubisvora -m --vsolution-import-path=/datahub/bdh-assembly-vsystem 
   # Get vora-tx-coordinator port
   port=$(kubectl get services -n vora vora-tx-coordinator | grep -o -P '(?<=10002:).*(?=/TCP)')
   echo $port > /vagrant/shared/txcoordinatorport.txt
