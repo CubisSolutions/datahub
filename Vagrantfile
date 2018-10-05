@@ -4,7 +4,7 @@
 BOX_IMAGE = "ubuntu/xenial64"
 NODE_COUNT = 4 
 NODE_IP_NW = "10.11.12."
-NODE_MEM = "4096"
+NODE_MEM = "3584"
 
 Vagrant.configure("2") do |config|
   

@@ -3,8 +3,8 @@
 # Source: http://kubernetes.io/docs/getting-started-guides/kubeadm/
 
 sudo mkdir /datahub
-sudo unzip -o /vagrant/DATAHUBRT.ZIP -d /datahub
-sudo unzip -o /vagrant/DHFLOWAGENT.ZIP -d /datahub
+sudo unzip -n /vagrant/DATAHUBRT.ZIP -d /datahub
+sudo unzip -n /vagrant/DHFLOWAGENT.ZIP -d /datahub
 sudo chmod 755 -R /datahub
 sudo chown vagrant:vagrant -R /datahub
 
