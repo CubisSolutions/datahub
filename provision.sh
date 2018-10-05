@@ -74,6 +74,13 @@ then
   ssh-keygen -f /vagrant/shared/id_rsa -q -N ""
   cat /vagrant/shared/id_rsa.pub >> /home/vagrant/.ssh/authorized_keys
 else
+  cp /vagrant/shared/id_rsa* /home/vagrant/.ssh/
+  cp /vagrant/shared/id_rsa  /root/.ssh/
+  ssh-keyscan -H master >> /home/vagrant/.ssh/known_hosts
+  ssh-keyscan -H master >> /root/.ssh/known_hosts
+  chown vagrant:vagrant -R /home/vagrant/.ssh
+  chmod 600 -R /home/vagrant/.ssh/id_rsa
+  chmod 600 -R /root/.ssh/id_rsa
   if [ "$1" = "hadoop" ]
   then
     apt-get install -y openjdk-8-jre-headless
@@ -116,12 +123,7 @@ else
     token=`cat /vagrant/shared/token.txt` 
     echo "Applying token: $token"
     kubeadm join --token $token 10.11.12.10:6443
-    cp /vagrant/shared/id_rsa* /home/vagrant/.ssh/
-    cp /vagrant/shared/id_rsa  /root/.ssh/
-    ssh-keyscan -H master >> /home/vagrant/.ssh/known_hosts
-    ssh-keyscan -H master >> /root/.ssh/known_hosts
-    chown vagrant:vagrant -R /home/vagrant/.ssh
-    chmod 600 -R /home/vagrant/.ssh/id_rsa
-    chmod 600 -R /root/.ssh/id_rsa
+    ssh-keyscan -H hadoop >> /home/vagrant/.ssh/known_hosts
+    ssh-keyscan -H hadoop >> /root/.ssh/known_hosts
   fi
 fi
