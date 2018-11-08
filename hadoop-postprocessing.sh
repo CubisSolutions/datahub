@@ -25,6 +25,10 @@ sudo su - vagrant -c 'hdfs dfs -mkdir -p /user/vora/lib'
 sudo su - vagrant -c 'hdfs dfs -put /opt/vora-spark/lib/spark-sap-datasources-spark2.jar /user/vora/lib/'
 sudo su - vagrant -c 'python /datahub/SAPVora-SparkIntegration/lib/auth_config.py --username default\\vora --password cubisvora > /home/vagrant/v2auth.conf'
 
+# Prepare for datahub deployment
+sudo su - vagrant -c 'hdfs dfs -mkdir -p /user/vora/checkpoint-store/'
+sudo su - vagrant -c 'hdfs dfs -chown -R vora /user/vora'
+
 # Installation of data Provisioning Agent and Data Hub Adapter for hadoop access.
 sudo /vagrant/SAPCAR.EXE -xvf /vagrant/IMDB_DPAGENT.SAR -R /home/vagrant
 sudo unzip -o /vagrant/DHSDIADAPTER.ZIP -d /home/vagrant

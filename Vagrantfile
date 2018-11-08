@@ -4,40 +4,44 @@
 BOX_IMAGE = "ubuntu/xenial64"
 NODE_COUNT = 4 
 NODE_IP_NW = "10.11.12."
-NODE_MEM = "3584"
+NODE_MEM = "5120"
 
 Vagrant.configure("2") do |config|
   
   config.vm.box = BOX_IMAGE 
   config.vm.box_check_update = false
   
-  config.disksize.size = "50GB"
-
-  config.vm.provider "virtualbox" do |l|
-    l.cpus = 2 
-    l.memory = NODE_MEM 
-  end
-
   config.hostmanager.enabled = true
   config.hostmanager.manage_guest = true
+      
+  config.disksize.size = "75GB"
 
   (1..NODE_COUNT).each do |i|
     if i == 1
       config.vm.define "master" do |subconfig|
         subconfig.vm.network "forwarded_port", guest: 8001, host: 8001
-#        for j in 30000 .. 32767
-#          subconfig.vm.network :forwarded_port, guest: j, host: j
-#        end
+          config.vm.provider "virtualbox" do |l|
+            l.cpus = 2 
+            l.memory = "2048" 
+          end
+        subconfig.vm.network "forwarded_port", guest: 30200, host: 30200 
+        subconfig.vm.network "forwarded_port", guest: 30210, host: 30210 
+        subconfig.vm.network "forwarded_port", guest: 30215, host: 30215 
         subconfig.vm.hostname = "master"
         subconfig.vm.network :private_network, ip: NODE_IP_NW + "#{i + 9}"
 	subconfig.vm.provision :shell, :path => "provision.sh", :args => "'master'"
         subconfig.trigger.after :up do |trigger|
           trigger.info = "Starting dashboard ..."
           trigger.run_remote = { inline: "/vagrant/master-postprocessing.sh" }
-	end
+        end
       end
     else
       if i == 2
+        config.vm.provider "virtualbox" do |l|
+         l.cpus = 2 
+         l.memory = NODE_MEM 
+        end
+
         config.vm.define "hadoop" do |subconfig|
 	  subconfig.vm.hostname = "hadoop"
           subconfig.vm.network :private_network, ip: NODE_IP_NW + "#{i + 9}"
@@ -50,10 +54,21 @@ Vagrant.configure("2") do |config|
           subconfig.trigger.after :up do |trigger|
             trigger.info = "Starting dashboard ..."
             trigger.run_remote = { inline: "/vagrant/hadoop-postprocessing.sh" }
-	end
+ 	  end
 	end
       else
         config.vm.define "node#{i - 2}" do |subconfig|
+	  if i == 4 
+            config.vm.provider "virtualbox" do |l|
+              l.cpus = 4 
+              l.memory = "21624" 
+            end
+	  else
+            config.vm.provider "virtualbox" do |l|
+              l.cpus = 2 
+              l.memory =  NODE_MEM
+            end
+	  end 
           subconfig.vm.hostname = "node#{i - 2}"
           subconfig.vm.network :private_network, ip: NODE_IP_NW + "#{i + 9}"
           subconfig.vm.provision :shell, :path => "provision.sh", :args => "'node'"

@@ -1,0 +1,13 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: d0
+spec:
+  capacity:
+    storage: 50Gi
+  accessModes:
+    - ReadWriteOnce
+  nfs:
+    server: master
+    path: /mnt/voranfs/datahub/d0
+  persistentVolumeReclaimPolicy: Retain

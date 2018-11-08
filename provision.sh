@@ -15,7 +15,7 @@ then
   # Source: http://kubernetes.io/docs/getting-started-guides/kubeadm/
 
 
-  apt-get install -y kubelet=1.7.16-00 kubeadm=1.7.16-00 kubectl=1.7.15-00 kubernetes-cni=0.5.1-00
+  apt-get install -y kubelet=1.10.1-00 kubeadm=1.10.1-00 kubectl=1.10.1-00 kubernetes-cni=0.6.0-00
   apt-get install -y docker.io rpcbind nfs-common nfs-kernel-server libaio1 
 
   sudo cp /vagrant/daemon.json /etc/docker/daemon.json
@@ -44,6 +44,11 @@ then
   sudo mkdir /mnt/voranfs
   sudo mkdir /mnt/voranfs/vora
   sudo mkdir /mnt/voranfs/vora/vsystem
+  sudo mkdir /mnt/voranfs/datahub
+  sudo mkdir /mnt/voranfs/datahub/d0
+  sudo mkdir /mnt/voranfs/datahub/d1
+  sudo mkdir /mnt/voranfs/datahub/d2
+  sudo mkdir /mnt/voranfs/datahub/d3
   sudo chmod 777 -R /mnt/voranfs
 
   sudo cp /vagrant/exports /etc/exports
@@ -56,22 +61,22 @@ then
 
   kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"
 
-  kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v1.7.1/src/deploy/alternative/kubernetes-dashboard.yaml
+  kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v1.10.0/src/deploy/alternative/kubernetes-dashboard.yaml
 
   kubectl apply -f /vagrant/dashboard-admin.yaml
 
   docker run -d -p 5000:5000 --restart always --name registry registry:2
 
-  curl -LO https://storage.googleapis.com/kubernetes-helm/helm-v2.6.1-linux-amd64.tar.gz > helm-v2.6.1-linux-amd64.tar.gz
-  gunzip helm-v2.6.1-linux-amd64.tar.gz
-  tar xvf helm-v2.6.1-linux-amd64.tar
+  curl -LO https://storage.googleapis.com/kubernetes-helm/helm-v2.9.1-linux-amd64.tar.gz 
+  gunzip helm*.tar.gz
+  tar xvf helm-*-linux-amd64.tar
   sudo mv linux-amd64/helm /usr/bin/helm
-  rm helm-v2.6.1-linux-amd64.tar
+  rm helm-*.tar*
 
   kubectl create clusterrolebinding add-on-cluster-admin --clusterrole=cluster-admin --serviceaccount=kube-system:default
 
   # Create ssh key pair to get acess from nodes to master
-  ssh-keygen -f /vagrant/shared/id_rsa -q -N ""
+  ssh-keygen -f /vagrant/shared/id_rsa -q -N "" >/dev/null
   cat /vagrant/shared/id_rsa.pub >> /home/vagrant/.ssh/authorized_keys
 else
   cp /vagrant/shared/id_rsa* /home/vagrant/.ssh/
@@ -119,10 +124,11 @@ else
     add-apt-repository ppa:ubuntu-toolchain-r/test -y
     apt-get update
     apt-get -y install libstdc++6
+
   else
     token=`cat /vagrant/shared/token.txt` 
     echo "Applying token: $token"
-    kubeadm join --token $token 10.11.12.10:6443
+    kubeadm join --token $token 10.11.12.10:6443 --discovery-token-unsafe-skip-ca-verification
     ssh-keyscan -H hadoop >> /home/vagrant/.ssh/known_hosts
     ssh-keyscan -H hadoop >> /root/.ssh/known_hosts
   fi
