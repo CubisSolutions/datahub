@@ -1,5 +1,5 @@
 # datahub
-SAP Data Hub 1.4 / Vora 2.2
+SAP Data Hub 2.3
 
 ## Vagrant
 The setup/deployment of the the Kubernetes cluster, hadoop system and extraction of the Datahub ZIP files has been orchestrated in a vagrant setup. So in order to spin up the VMs needed for running the cluster, you should have vagrant installed on your local machine. The version of vagrant used in this setup is 2.1.2. The setup was done in combination with VirtualBox VM software.
@@ -17,6 +17,7 @@ vagrant up
 vagrant ssh master
 
 ```
+## Text herunder under construction!!! Not yet up-to-date!!!
 After the initial setup you should be able to access the [Kubernetes Dashboard](http://10.11.12.10:8001/api/v1/namespaces/kube-system/services/http:kubernetes-dashboard:/proxy/), the [Yarn Cluster Manager Webui](http://10.11.12.10:8088/cluster) and the [Hadoop Webui](http://10.11.12.10:50070).
 
 Now that the Kubernets cluster is running, the SAP Data Hub and Vora deployment can be started from the master node.
