@@ -1,0 +1,4 @@
+#!/bin/sh
+
+export SUSER=
+exoirt SUSERPW=
