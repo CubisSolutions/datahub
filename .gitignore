@@ -9,4 +9,4 @@
 /IMDB_DPAGENT.SAR
 /SAPCAR.EXE
 /shared/txcoordinatorport.txt
-*.sh
+/credential.sh
