@@ -89,7 +89,7 @@ else
   if [ "$1" = "hadoop" ]
   then
     apt-get install -y openjdk-8-jre-headless
-    wget http://www-eu.apache.org/dist/hadoop/common/stable/hadoop-2.9.1.tar.gz
+    wget http://apache.belnet.be/hadoop/common/hadoop-2.9.1/hadoop-2.9.1.tar.gz
     wget http://apache.cu.be/spark/spark-2.1.3/spark-2.1.3-bin-hadoop2.7.tgz
     tar -xzf hadoop-2.9.1.tar.gz
     tar -xzf spark-2.1.3-bin-hadoop2.7.tgz

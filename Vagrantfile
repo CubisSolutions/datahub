@@ -61,12 +61,12 @@ Vagrant.configure("2") do |config|
 	  if i == 4 
             config.vm.provider "virtualbox" do |l|
               l.cpus = 4 
-              l.memory = "21624" 
+              l.memory = "11624" 
             end
 	  else
             config.vm.provider "virtualbox" do |l|
-              l.cpus = 2 
-              l.memory =  NODE_MEM
+              l.cpus = 4 
+              l.memory = "6144" 
             end
 	  end 
           subconfig.vm.hostname = "node#{i - 2}"

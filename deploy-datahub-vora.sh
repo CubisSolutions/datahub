@@ -22,7 +22,7 @@ then
 
 # Credential informations should be provided in the sourced shell script
   source /vagrant/credential.sh
-  /datahub/SAPDataHub/install.sh --namespace=vora --registry=10.11.12.10:5000 --sap-registry-login-type=2 --sap-registry-login-username=$SUSER --sap-registry-login-password='$SUSERPW' -a --cert-domain=master --vora-admin-username=$DATAHUBUSER --vora-admin-password='$DATAHUBPW' --vora-system-password='$DATAHUBPW' --vsystem-tenant=cubis --interactive-security-configuration=no --enable-checkpoint-store=yes --checkpoint-store-type=webhdfs --checkpoint-store-connection=webhdfs://10.11.12.11:50070/user/vora/checkpoint-store/ -ss=vora-diagnostic --pv-storage-class=rook-ceph-block --non-interactive-mode --validate-checkpoint-store=no -c
+  /datahub/SAPDataHub/install.sh --namespace=vora --registry=10.11.12.10:5000 --sap-registry-login-type=2 --sap-registry-login-username=$SUSER --sap-registry-login-password='$SUSERPW' -a --cert-domain=master --vora-admin-username=$DATAHUBUSER --vora-admin-password='$DATAHUBPW' --vora-system-password='$DATAHUBPW' --vsystem-tenant=cubis --interactive-security-configuration=no --enable-checkpoint-store=no --checkpoint-store-type=webhdfs --checkpoint-store-connection=webhdfs://10.11.12.11:50070/user/vora/checkpoint-store/ -ss=vora-diagnostic --pv-storage-class=rook-ceph-block --non-interactive-mode -c
   sleep 10
   echo "Vora: Deploy environment" 
 else

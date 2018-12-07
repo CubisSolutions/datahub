@@ -30,11 +30,11 @@ sudo su - vagrant -c 'hdfs dfs -mkdir -p /user/vora/checkpoint-store/'
 sudo su - vagrant -c 'hdfs dfs -chown -R vora /user/vora'
 
 # Installation of data Provisioning Agent and Data Hub Adapter for hadoop access.
-sudo /vagrant/SAPCAR.EXE -xvf /vagrant/IMDB_DPAGENT.SAR -R /home/vagrant
-sudo unzip -o /vagrant/DHSDIADAPTER.ZIP -d /home/vagrant
-sudo chown vagrant:vagrant -R /home/vagrant/HANA_DP_AGENT_20_LIN_X86_64
-sudo chown vagrant:vagrant -R /home/vagrant/BDH_ADAPTER_LIN_X86_64
-sudo mkdir -p /usr/sap/dataprovagent
-sudo chown vagrant:vagrant /usr/sap/dataprovagent
+#sudo /vagrant/SAPCAR.EXE -xvf /vagrant/IMDB_DPAGENT.SAR -R /home/vagrant
+#sudo unzip -o /vagrant/DHSDIADAPTER.ZIP -d /home/vagrant
+#sudo chown vagrant:vagrant -R /home/vagrant/HANA_DP_AGENT_20_LIN_X86_64
+#sudo chown vagrant:vagrant -R /home/vagrant/BDH_ADAPTER_LIN_X86_64
+#sudo mkdir -p /usr/sap/dataprovagent
+#sudo chown vagrant:vagrant /usr/sap/dataprovagent
 
 exit
