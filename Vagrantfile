@@ -26,7 +26,7 @@ Vagrant.configure("2") do |config|
           end
         subconfig.vm.network "forwarded_port", guest: 30200, host: 30200 
         subconfig.vm.network "forwarded_port", guest: 30210, host: 30210 
-        subconfig.vm.network "forwarded_port", guest: 30215, host: 30215 
+        subconfig.vm.network "forwarded_port", guest: 30158, host: 30158 
         subconfig.vm.hostname = "master"
         subconfig.vm.network :private_network, ip: NODE_IP_NW + "#{i + 9}"
 	subconfig.vm.provision :shell, :path => "provision.sh", :args => "'master'"
